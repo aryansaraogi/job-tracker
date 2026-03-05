@@ -84,10 +84,10 @@ function Dashboard() {
 
 
   return (
-    <div>
+    <div className="container">
       <h2>Dashboard</h2>
       <button onClick={handleLogout}>Logout</button>
-      <form onSubmit={handleAddJob} style={{ margin: '10px 0', border: '1px solid #ddd', padding: '8px' }}>
+      <form onSubmit={handleAddJob}>
         <h4>Add Job</h4>
         <input
           placeholder="Title"
@@ -112,21 +112,21 @@ function Dashboard() {
         />
         <button type="submit">Add</button>
       </form>
-      <div style={{ margin: '10px 0' }}>
+      <div className="view-toggle">
         <label>View: </label>
         <select value={viewMode} onChange={e => setViewMode(e.target.value)}>
           <option value="kanban">Kanban</option>
           <option value="list">List</option>
         </select>
       </div>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p className="error">{error}</p>}
       {viewMode === 'kanban' ? (
-        <div style={{ display: 'flex', gap: '1rem' }}>
+        <div className="kanban-board">
           {statuses.map(status => (
-            <div key={status} style={{ flex: 1, border: '1px solid #ccc', padding: '8px' }}>
+            <div key={status} className="kanban-column">
               <h3 style={{ textTransform: 'capitalize' }}>{status}</h3>
               {grouped[status].map(job => (
-                <div key={job._id} style={{ marginBottom: '6px', padding: '4px', background: '#f9f9f9' }}>
+                <div key={job._id} className="job-card">
                   <strong>{job.title}</strong><br />
                   <small>{job.company}</small><br />
                   <select
