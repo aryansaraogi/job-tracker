@@ -17,6 +17,9 @@ router.get('/', auth, async (req, res) => {
 // create new job
 router.post('/', auth, async (req, res) => {
   const { title, company, url, status, notes, portal } = req.body;
+  if (!title) {
+    return res.status(400).json({ message: 'Title is required' });
+  }
   try {
     const job = new Job({
       user: req.user.id,
@@ -57,7 +60,7 @@ router.delete('/:id', auth, async (req, res) => {
     let job = await Job.findById(req.params.id);
     if (!job) return res.status(404).json({ message: 'Job not found' });
     if (job.user.toString() !== req.user.id) return res.status(401).json({ message: 'Not authorized' });
-    await Job.findByIdAndRemove(req.params.id);
+    await Job.findByIdAndDelete(req.params.id);
     res.json({ message: 'Job removed' });
   } catch (err) {
     console.error(err.message);
