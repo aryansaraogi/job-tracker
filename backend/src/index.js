@@ -18,10 +18,7 @@ app.use('/api/jobs', require('./routes/jobs'));
 app.use('/api/credentials', require('./routes/credentials'));
 
 // connect to mongo
-mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/job_tracker', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/job_tracker');
 
 mongoose.connection.on('connected', () => {
   console.log('MongoDB connected');
