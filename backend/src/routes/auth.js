@@ -7,6 +7,12 @@ const router = express.Router();
 // register
 router.post('/register', async (req, res) => {
   const { email, password, name } = req.body;
+  if (!email || !password) {
+    return res.status(400).json({ message: 'Email and password are required' });
+  }
+  if (password.length < 6) {
+    return res.status(400).json({ message: 'Password must be at least 6 characters long' });
+  }
   try {
     let user = await User.findOne({ email });
     if (user) return res.status(400).json({ message: 'User already exists' });
@@ -24,6 +30,9 @@ router.post('/register', async (req, res) => {
 // login
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
+  if (!email || !password) {
+    return res.status(400).json({ message: 'Email and password are required' });
+  }
   try {
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ message: 'Invalid credentials' });
